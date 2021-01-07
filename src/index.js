@@ -7,6 +7,7 @@ const sleep = (milliseconds) => {
   
 
 function execute_command(command, args) {
+    core.info(`Run ${command} ${args}`);
     var result = spawnSync(command, args);
     if(result.status == 0) {
         core.info(`${String(result.stdout)}`);
@@ -56,7 +57,7 @@ function install_minikube() {
 function run_registry() {
     core.info(`Running registry...`);
     var registryCommand = 'docker';
-    var registryArgs = ['run', '--name', 'image-registry', '-d', '-p', '5000:5000', 'registry'];
+    var registryArgs = ['run', '--name', 'image-registry', '-d', '-p', '5000:5000', '--restart=always', 'registry'];
     return execute_command(registryCommand, registryArgs);
 }
 
